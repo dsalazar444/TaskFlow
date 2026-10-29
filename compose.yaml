@@ -1,0 +1,25 @@
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: taskflow-db
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: ${DB_NAME:?DB_NAME is required}
+      POSTGRES_USER: ${DB_USERNAME:?DB_USERNAME is required}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD is required}
+
+    ports:
+      - "$127.0.0.1:{POSTGRES_HOST_PORT:?POSTGRES_HOST_PORT is required}:5432"
+    
+    volumes:
+      - taskflow_pgdata:/var/lib/postgresql/data
+    
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  taskflow_pgdata:
