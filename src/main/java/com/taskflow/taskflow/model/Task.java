@@ -59,6 +59,10 @@ public class Task extends BaseEntity{
         return title;
     }
     public void setTitle(String title) {
+        if (title == null || title.isBlank()){
+            throw new IllegalArgumentException("Title cannot be blank nor null");
+
+        }
         this.title = title;
     }
     
@@ -81,6 +85,7 @@ public class Task extends BaseEntity{
         return dueDate;
     }
     public void setDueDate(LocalDate dueDate) {
+        // dueDate puede estar 
         this.dueDate = dueDate;
     }
 
