@@ -2,6 +2,7 @@ package com.taskflow.taskflow.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -88,6 +89,10 @@ public class Task extends BaseEntity{
         // dueDate puede estar 
         this.dueDate = dueDate;
     }
+
+    // EXTENDED TASK METHODS 
+    // public LocalDateTime getCreatedAt() 
+    // public LocalDateTime getModifiedAt()
 
     // TODO: Revisar si quitar
     public void updateTask(
