@@ -32,12 +32,8 @@ public class TaskController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED) // responsestatus es para especificar statuscode si funcion termina bien -> default: 200
-    // si la funcion termina exitosamente, Spring lo toma como exitosa, y responde 200, en este caso, 201 porque se lo especificamos
-    // si se lanza exception, el controller no llega a ejecutar el return pues la exception interrumpe la ejecución, entonces
-    // entra el handler, y genera un response error
-    // Valid indica que se hagan verificaciones especificadas en el dto, si fallan, lanza exception MethodArgumentNotValidException
-    public TaskResponse createTask(@RequestBody @Valid CreateTaskRequest task) { // requestBody obtiene datos de json, y con ellos crea un objeto CreateTaskRequest
+    @ResponseStatus(HttpStatus.CREATED) 
+    public TaskResponse createTask(@RequestBody @Valid CreateTaskRequest task) { 
         return taskService.createTask(task);
     }
 

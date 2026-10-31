@@ -39,14 +39,10 @@ public class Task extends BaseEntity{
 
     protected Task() {
         // required constructor for JPA.
-        // JPA necesita este constructor para cuando trae registros de la BD -> debe crear
-        // objetos Task con esto, entonces obliga crearle un constructor vacio para él.
-        // es vacio porque Hibernate necesita poder crear objeto antes de asignarle valores,
-        // porque RECUPERA, no CREA. El otro es para crear, no para recuperar.
     }
 
     public Task(String title, String description, LocalDate dueDate) {
-        setTitle(title); // dentro del setter se válida, y se asigna. Para que siempre se creen objetos validos
+        setTitle(title);
         this.description = description;
         this.dueDate = dueDate;
         this.status = TaskStatus.PENDING;
