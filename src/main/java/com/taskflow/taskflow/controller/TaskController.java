@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.taskflow.taskflow.model.Task;
+import com.taskflow.taskflow.dto.CreateTaskRequest;
+import com.taskflow.taskflow.dto.UpdateTaskRequest;
+import com.taskflow.taskflow.dto.TaskResponse;
 import com.taskflow.taskflow.service.TaskService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -32,32 +36,31 @@ public class TaskController {
     // si la funcion termina exitosamente, Spring lo toma como exitosa, y responde 200, en este caso, 201 porque se lo especificamos
     // si se lanza exception, el controller no llega a ejecutar el return pues la exception interrumpe la ejecución, entonces
     // entra el handler, y genera un response error
-    public Task createTask(@RequestBody Task task) { // requestBody obtiene datos de json, y con ellos crea un objeto Task
+    // Valid indica que se hagan verificaciones especificadas en el dto, si fallan, lanza exception MethodArgumentNotValidException
+    public TaskResponse createTask(@RequestBody @Valid CreateTaskRequest task) { // requestBody obtiene datos de json, y con ellos crea un objeto CreateTaskRequest
         return taskService.createTask(task);
     }
 
     @GetMapping
-    public List<Task> getAllTasks() {
+    public List<TaskResponse> getAllTasks() {
         return taskService.getAllTasks();
     }
 
     @GetMapping("/{id}")
-    public Task getTaskById(@PathVariable Long id) {
+    public TaskResponse getTaskById(@PathVariable Long id) {
         return taskService.getTaskById(id);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT) 
     @DeleteMapping("/{id}")
     public void deleteTask(@PathVariable Long id) {
-        taskService.deleteTask(id);
+        taskService.deleteTask(id); 
     }
 
-    // TODO modify petición:
-    
     @PutMapping("/{id}")
-    public Task updateTask(
+    public TaskResponse updateTask(
             @PathVariable Long id,
-            @RequestBody Task updatedTask
+            @RequestBody @Valid UpdateTaskRequest updatedTask
     ) {
         return taskService.updateTask(id, updatedTask);
     }
