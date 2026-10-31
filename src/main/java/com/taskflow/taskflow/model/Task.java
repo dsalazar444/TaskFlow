@@ -2,6 +2,7 @@ package com.taskflow.taskflow.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 
 @Entity
@@ -63,7 +64,10 @@ public class Task extends BaseEntity{
             throw new IllegalArgumentException("Title cannot be blank nor null");
 
         }
-        this.title = title;
+
+        if (!Objects.equals(this.title, title)) {
+            this.title = title;
+        }
     }
     
 
@@ -71,39 +75,43 @@ public class Task extends BaseEntity{
         return description;
     }
     public void setDescription(String description) {
-        this.description = description;
+        if (!Objects.equals(this.description, description)) {
+            this.description = description;
+        }
     }
 
     public TaskStatus getStatus() {
         return status;
     }
     public void setStatus(TaskStatus status) {
-        this.status = status;
+        if (!Objects.equals(this.status, status)) {
+            this.status = status;
+        }
     }
 
     public LocalDate getDueDate() {
         return dueDate;
     }
     public void setDueDate(LocalDate dueDate) {
-        // dueDate puede estar 
-        this.dueDate = dueDate;
+        if (!Objects.equals(this.dueDate, dueDate)) {
+            this.dueDate = dueDate;
+        }
     }
 
     // EXTENDED TASK METHODS 
     // public LocalDateTime getCreatedAt() 
     // public LocalDateTime getModifiedAt()
 
-    // TODO: Revisar si quitar
     public void updateTask(
             String title,
             String description,
             LocalDate dueDate,
             TaskStatus status
     ) {
-        this.title = title;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.status = status;
+        setTitle(title);
+        setDescription(description);
+        setDueDate(dueDate);
+        setStatus(status);
     }
 
 }

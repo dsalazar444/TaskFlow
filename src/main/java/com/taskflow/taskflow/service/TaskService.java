@@ -37,4 +37,17 @@ public class TaskService {
         taskRepository.findById(id)
             .ifPresent(taskRepository::delete); // para que sea idempotente -> no usamos getTaskById porque esta lanza exception, y queremos que no lo haga, pues es idempotente
     }
+
+    public Task updateTask(Long id, Task updatedTask){
+        Task task = getTaskById(id);
+
+        // si existe, actualizamos valores
+        task.updateTask(
+            updatedTask.getTitle(),
+            updatedTask.getDescription(),
+            updatedTask.getDueDate(),
+            updatedTask.getStatus());
+        
+        return taskRepository.save(task);
+    }
 }
