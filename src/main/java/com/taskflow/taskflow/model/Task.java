@@ -45,7 +45,7 @@ public class Task extends BaseEntity{
     }
 
     public Task(String title, String description, LocalDate dueDate) {
-        this.title = title;
+        setTitle(title); // dentro del setter se válida, y se asigna. Para que siempre se creen objetos validos
         this.description = description;
         this.dueDate = dueDate;
         this.status = TaskStatus.PENDING;
