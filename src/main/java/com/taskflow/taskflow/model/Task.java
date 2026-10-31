@@ -33,6 +33,13 @@ public class Task extends BaseEntity{
     @Column(name = "due_date")
     private LocalDate dueDate;
 
+    // lazy -> carga solo cuando hay acción con dato 
+    // optional es que esa relación si o si debe existir -> actua sobre relacion manytoone
+    // mientras que el notnull, actua sobre columna
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     // EXTENDED TASK ATTRIBUTES
     // private LocalDateTime modifiedAt
     // private LocalDateTime createdAt
@@ -45,15 +52,25 @@ public class Task extends BaseEntity{
         // porque RECUPERA, no CREA. El otro es para crear, no para recuperar.
     }
 
-    public Task(String title, String description, LocalDate dueDate) {
+    public Task(
+        String title,
+        String description, 
+        LocalDate dueDate, 
+        User user
+    ) {
         setTitle(title); // dentro del setter se válida, y se asigna. Para que siempre se creen objetos validos
         this.description = description;
         this.dueDate = dueDate;
         this.status = TaskStatus.PENDING;
+        this.user = user;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public String getTitle() {

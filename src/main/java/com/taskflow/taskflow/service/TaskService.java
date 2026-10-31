@@ -81,14 +81,15 @@ public class TaskService {
         return new Task(
             request.title(),
             request.description(),
-            request.dueDate()
+            request.dueDate(),
+            request.user(),
         );
     }
 
     private Task findTaskOrThrow(Long id) {
         return taskRepository.findById(id) // findByid retorna un objeto tipo optional<Task>
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Task", id) 
+                        new ResourceNotFoundException("Task", "id", id.toString()) 
                 );
     }
 }

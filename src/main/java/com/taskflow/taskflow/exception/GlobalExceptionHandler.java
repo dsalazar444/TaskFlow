@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 // cuando se lance exception, spring vendrá acá a ver si hay un handler
 public class GlobalExceptionHandler {
     
+    // TODO: Ver si usar dto para errorrespone (tendriamos 2, uno para errors normales, y otro para validationErrors)
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<String> handleResourceNotFound(ResourceNotFoundException ex) {
 
@@ -36,6 +37,15 @@ public class GlobalExceptionHandler {
         );
 
         return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ExceptionHandler(ResourceAlreadyExistsException.class)
+    public ResponseEntity<String> handleResourceAlreadyExists(ResourceAlreadyExistsException ex
+    ) {
+
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(ex.getMessage());
     }
 }
 

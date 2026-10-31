@@ -1,0 +1,14 @@
+
+package com.taskflow.taskflow.repository;
+
+import com.taskflow.taskflow.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+
+    Optional<User> findByEmail(String email); // Spring Data JPA genera las consultas a partir de los nombres de los métodos:
+
+    boolean existsByEmail(String email);
+}
